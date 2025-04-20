@@ -30,6 +30,7 @@ public partial class AndroidUtilities : BasePlugin
         Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), Id);
     }
 
+    // frame rate patch
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.Awake))]
     public static class AmongUsClientPatch
     {
@@ -39,6 +40,7 @@ public partial class AndroidUtilities : BasePlugin
         }
     }
 
+    // light source patch
     [HarmonyPatch(typeof(LightSource), nameof(LightSource.Initialize))]
     public static class LightSourcePatch
     {
@@ -48,6 +50,7 @@ public partial class AndroidUtilities : BasePlugin
         }
     }
 
+    // here for testing purposes
     [HarmonyPatch(typeof(HatManager), nameof(HatManager.Initialize))]
     public static class HatManagerPatch
     {
@@ -57,6 +60,7 @@ public partial class AndroidUtilities : BasePlugin
         }
     }
 
+    // TODO: remove when funni fixes gplay auth
     [HarmonyPatch(typeof(EOSManager))]
     public static class EosPatches
     {
