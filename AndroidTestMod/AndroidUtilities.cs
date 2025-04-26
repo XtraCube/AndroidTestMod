@@ -59,26 +59,4 @@ public partial class AndroidUtilities : BasePlugin
             CosmeticsUnlocker.UnlockCosmetics(__instance);
         }
     }
-
-    // TODO: remove when funni fixes gplay auth
-    [HarmonyPatch(typeof(EOSManager))]
-    public static class EosPatches
-    {
-        [HarmonyPrefix]
-        [HarmonyPatch(nameof(EOSManager.StartInitialLoginFlow))]
-        public static bool InitialLoginPrefix(EOSManager __instance)
-        {
-            __instance.StartTempAccountFlow();
-            __instance.CloseStartupWaitScreen();
-            return false;
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(nameof(EOSManager.LoginFromAccountTab))]
-        public static bool LoginFromAccountTabPrefix(EOSManager __instance)
-        {
-            __instance.StartTempAccountFlow();
-            return false;
-        }
-    }
 }
