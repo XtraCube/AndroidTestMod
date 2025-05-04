@@ -19,7 +19,8 @@ public partial class AndroidUtilities : BasePlugin
     public AndroidUtilities()
     {
         Instance = this;
-        Logger = Log;}
+        Logger = Log;
+    }
     
     public override void Load()
     {
