@@ -50,14 +50,4 @@ public partial class AndroidUtilities : BasePlugin
             __instance.rendererType = Instance.LightSourceRenderMode.Value;
         }
     }
-
-    // here for testing purposes
-    [HarmonyPatch(typeof(HatManager), nameof(HatManager.Initialize))]
-    public static class HatManagerPatch
-    {
-        public static void Postfix(HatManager __instance)
-        {
-            CosmeticsUnlocker.UnlockCosmetics(__instance);
-        }
-    }
 }
