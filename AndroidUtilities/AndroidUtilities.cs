@@ -1,25 +1,24 @@
 ﻿using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using UnityEngine;
 
-namespace AndroidTestMod;
+namespace AndroidUtilities;
 
 [BepInAutoPlugin("dev.xtracube.androidutilities")]
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class AndroidUtilities : BasePlugin
 {
-    public static ManualLogSource Logger { get; private set; }
-    public static AndroidUtilities Instance { get; private set; }
-    public ConfigEntry<int> TargetFrameRate { get; private set; }
-    public ConfigEntry<LightSourceRendererType> LightSourceRenderMode { get; private set; }
+    private static AndroidUtilities Instance { get; set; }
+
+    private ConfigEntry<int> TargetFrameRate { get; set; }
+    private ConfigEntry<LightSourceRendererType> LightSourceRenderMode { get; set; }
 
     public AndroidUtilities()
     {
         Instance = this;
-        Logger = Log;
     }
     
     public override void Load()
@@ -45,6 +44,7 @@ public partial class AndroidUtilities : BasePlugin
     [HarmonyPatch(typeof(LightSource), nameof(LightSource.Initialize))]
     public static class LightSourcePatch
     {
+        // ReSharper disable once InconsistentNaming
         public static void Prefix(LightSource __instance)
         {
             __instance.rendererType = Instance.LightSourceRenderMode.Value;

@@ -1,4 +1,4 @@
-﻿namespace AndroidTestMod;
+﻿namespace AndroidUtilities;
 
 public static class CosmeticsUnlocker
 {
