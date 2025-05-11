@@ -39,6 +39,23 @@ public partial class AndroidUtilities : BasePlugin
             Application.targetFrameRate = Instance.TargetFrameRate.Value;
         }
     }
+    
+    [HarmonyPatch(typeof(StoreManager), nameof(StoreManager.InitiateStorePurchaseStar))]
+    public static class DisableStarBuyPatch
+    {
+        // ReSharper disable once InconsistentNaming
+        public static bool Prefix(StoreManager __instance)
+        {
+            var purchasePopUp = StoreMenu.Instance.plsWaitModal;
+            purchasePopUp.waitingText.gameObject.SetActive(false);
+            purchasePopUp.titleText.text = "NOT SUPPORTED";
+            purchasePopUp.infoText.text = "Platform Purchases are not supported in Starlight.\nBuy in the vanilla client instead.";
+            purchasePopUp.infoText.gameObject.SetActive(true);
+            purchasePopUp.controllerFocusHolder.gameObject.SetActive(true);
+            purchasePopUp.closeButton.gameObject.SetActive(true);
+            return false;
+        }
+    }
 
     // light source patch
     [HarmonyPatch(typeof(LightSource), nameof(LightSource.Initialize))]
