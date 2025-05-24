@@ -2,7 +2,10 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
+using Epic.OnlineServices;
+using Epic.OnlineServices.Connect;
 using HarmonyLib;
+using Il2CppSystem;
 using UnityEngine;
 
 namespace AndroidUtilities;
@@ -28,6 +31,25 @@ public partial class AndroidUtilities : BasePlugin
         Config.Save();
 
         Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), Id);
+    }
+
+    [HarmonyPatch(typeof(EOSManager), nameof(EOSManager.LoginWithCorrectPlatformImpl))]
+    public static class AuthPatch
+    {
+        public static bool Prefix(EOSManager __instance, OnLoginCallback successCallbackIn)
+        {
+            
+            var loginOptions = new LoginOptions();
+            var credentials = new Credentials();
+            credentials.Token = new Utf8String("DUMMY");
+            credentials.Type = ExternalCredentialType.ItchioKey;
+            loginOptions.Credentials = new Nullable<Credentials>(credentials);
+            var loginOptions2 = loginOptions;
+            __instance.PlatformInterface.GetConnectInterface().Login(ref loginOptions2, null, successCallbackIn);
+            __instance.stopTimeOutCheck = true;
+
+            return false;
+        }
     }
 
     // frame rate patch
