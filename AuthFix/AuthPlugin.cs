@@ -423,7 +423,7 @@ public partial class AuthPlugin : BasePlugin
         public static bool Prefix()
         {
             // We don't want Google Play Games to initialize at all.
-            return false;
+            return true;
         }
     }
 
@@ -454,4 +454,4 @@ public partial class AuthPlugin : BasePlugin
     }
 }
 
-public class Coroutines : MonoBehaviour { }
+public class Coroutines : MonoBehaviour;
