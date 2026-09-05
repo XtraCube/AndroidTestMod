@@ -1,5 +1,4 @@
-﻿using AmongUs.Data;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
@@ -8,8 +7,6 @@ using Epic.OnlineServices.Connect;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using InnerNet;
-using LibCpp2IL;
-using Rewired;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -38,6 +35,7 @@ public partial class AuthPlugin : BasePlugin
     private static unsafe partial void quit_app();
 
     [LibraryImport("libstarlight.so", EntryPoint = "open_url", StringMarshalling = StringMarshalling.Utf8)]
+    // ReSharper disable once UnusedMethodReturnValue.Local
     private static unsafe partial nint open_url(string url);
 
     private static bool _ranLobbyJoin;
@@ -53,7 +51,7 @@ public partial class AuthPlugin : BasePlugin
         if (HudManager.InstanceExists)
         {
             var joystick = HudManager.Instance.joystick;
-            if (joystick == null || joystick.TryCast<KeyboardJoystick> == null)
+            if (joystick == null || joystick.TryCast<KeyboardJoystick>() == null)
             {
                 HudManager.Instance.SetTouchType(ControlTypes.Keyboard);
             }
@@ -287,8 +285,7 @@ public partial class AuthPlugin : BasePlugin
                 return;
             }
 
-            if (type != ControlTypes.Keyboard)
-                type = ControlTypes.Keyboard;
+            type = ControlTypes.Keyboard;
         }
     }
 
