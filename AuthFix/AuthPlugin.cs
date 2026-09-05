@@ -430,6 +430,16 @@ public partial class AuthPlugin : BasePlugin
         }
     }
 
+    [HarmonyPatch(typeof(Application), nameof(Application.OpenURL))]
+    public static class ApplicationOpenURLPatch
+    {
+        public static bool Prefix([HarmonyArgument(0)] string url)
+        {
+            open_url(url);
+            return false;
+        }
+    }
+
     [HarmonyPatch(typeof(Constants), nameof(Constants.OpenURL))]
     public static class OpenURLPatch
     {
