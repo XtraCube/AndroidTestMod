@@ -414,16 +414,6 @@ public partial class AuthPlugin : BasePlugin
         }
     }
 
-    [HarmonyPatch(typeof(EOSManager), nameof(EOSManager.InitializePlatformImpl))]
-    public static class AuthPatch2
-    {
-        public static bool Prefix()
-        {
-            // We don't want Google Play Games to initialize at all.
-            return true;
-        }
-    }
-
     [HarmonyPatch(typeof(StoreManager), nameof(StoreManager.InitiateStorePurchaseStar))]
     public static class DisableStarBuyPatch
     {
